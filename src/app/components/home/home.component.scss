@@ -1,0 +1,19 @@
+.container-tabela-dados {
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+
+    th {
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    // .align-center {
+    //     text-align: center;
+    // }
+
+    td {
+        padding: 0.5rem 1rem;
+        box-sizing: border-box;
+    }
+}
