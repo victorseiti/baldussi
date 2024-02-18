@@ -1,4 +1,4 @@
-<p-dialog header="Empresas" [(visible)]="mostrar" [style]="{'width': '70vw'}" [modal]="true" [draggable]="false"
+<p-dialog header="Enviar notificação" [(visible)]="mostrar" [style]="{'width': '70vw'}" [modal]="true" [draggable]="false"
     [resizable]="false" (onHide)="fechar()">
 
     <div class="div-empresas">
@@ -21,7 +21,7 @@
                                     <p-tableCheckbox [value]="device"></p-tableCheckbox>
                                 </td>
                                 <td>{{device.username}}</td>
-                                <td>{{device.timestamp}}</td>
+                                <td>{{device.timestamp | date:'dd/MM/yyyy HH:mm'}}</td>
                             </tr>
                         </ng-template>
                     </p-table>

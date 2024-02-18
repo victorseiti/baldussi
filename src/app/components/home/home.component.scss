@@ -10,6 +10,20 @@
     justify-content: flex-start;
     gap: 1rem;
 
+    .abrirModal {
+        width: 80vw;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .buscar-cliente {
+            box-sizing: border-box;
+            display: flex;
+            gap: 1rem;
+        }
+    }
+
     th {
         padding: 1rem;
         box-sizing: border-box;

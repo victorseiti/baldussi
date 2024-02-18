@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './components/home/home.component';
-import { ClientesComponent } from './components/clientes/clientes.component';
+import { UsersComponent } from './components/users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientesService } from './core/clientes.service';
 import { TableModule } from 'primeng/table';
@@ -19,10 +19,14 @@ import { AccordionModule } from 'primeng/accordion';
 import { DevicesEmpresaComponent } from './components/modal/devices-empresa/devices-empresa.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthenticationService } from './core/authentication.service';
 import { AdicionarUsuarioComponent } from './components/modal/adicionar-usuario/adicionar-usuario.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { MensagensEnviadasComponent } from './components/modal/mensagens-enviadas/mensagens-enviadas.component';
+import { LogsComponent } from './components/logs/logs.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -30,10 +34,12 @@ import { InputTextModule } from 'primeng/inputtext';
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    ClientesComponent,
+    UsersComponent,
     LoginComponent,
     DevicesEmpresaComponent,
-    AdicionarUsuarioComponent
+    AdicionarUsuarioComponent,
+    MensagensEnviadasComponent,
+    LogsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,13 +55,16 @@ import { InputTextModule } from 'primeng/inputtext';
     AccordionModule,
     InputTextareaModule,
     ToastModule,
-    InputTextModule
+    InputTextModule,
+    ConfirmPopupModule,
+    DropdownModule
 
   ],
   providers: [
     ClientesService,
     AuthenticationService,
-    MessageService
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

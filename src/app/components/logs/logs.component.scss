@@ -1,0 +1,24 @@
+.container-logs {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+
+    .selecionar-log {
+        width: 80vw;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lista-logs {
+        box-sizing: border-box;
+        padding-bottom: 2rem;
+    }
+}
+

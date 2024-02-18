@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,7 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   currentRoute:any
 
@@ -21,6 +22,13 @@ export class HeaderComponent implements OnInit {
         const url = event.urlAfterRedirects;
         this.currentRoute = url;
       }
+    })
+  }
+
+  logout() {
+    this.auth.logout().subscribe(() => {
+      localStorage.removeItem('token');
+      this.router.navigate(['/login']);
     })
   }
 }

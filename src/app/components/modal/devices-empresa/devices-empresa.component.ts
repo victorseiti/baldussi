@@ -51,10 +51,25 @@ export class DevicesEmpresaComponent implements OnChanges {
 
     if (this.valueTxtArea !== '' && count > 0) {
       this.message.add({ severity: 'success', summary: 'Sucesso', detail: 'Mensagem enviada com sucesso' });
+      keys.forEach((key: any) => {
+        if (this.empresasSelecionadas[key].length > 0) {
+          let usernames:any={}
+          usernames['usernames'] = this.empresasSelecionadas[key].map((device: any) => {return device.username})
+          this.enviarNotificacaoPush(key, usernames)
+        }
+      })
     }
     else {
       this.message.add({ severity: 'warn', summary: 'Atenção', detail: 'Selecione ao menos uma empresa e preencha a mensagem' });
     }
+  }
+
+  enviarNotificacaoPush(prefixo:any, usernames:any) {
+    console.log('prefixo: ', prefixo)
+    console.log('usernames: ', usernames)
+    this.api.postEnviarNotificacoesPush(prefixo, usernames, this.valueTxtArea).subscribe((res:any) => {
+      console.log('res: ', res)
+    })
   }
 
   fechar() {

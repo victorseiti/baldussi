@@ -3,11 +3,15 @@
     <p-toast></p-toast>
 
     <div class="abrirModal">
+        <div class="buscar-cliente">
+            <input type="text" pInputText placeholder="Buscar Cliente" [(ngModel)]="filtro" (input)="inputPesquisar()">
+            <p-button icon="pi pi-search"   (click)="buscarClientes()"></p-button>
+        </div>
         <p-button label="Enviar Notificação" (click)="abrirModalDevices()"></p-button>
     </div>
 
     <div class="div-dados">
-        <p-table [value]="clientes" [(selection)]="clientesSelecionados" dataKey="prefixo" [loading]="carregandoDados">
+        <p-table [value]="clientes" [(selection)]="clientesSelecionados" [tableStyle]="{ 'width': '80vw' }" dataKey="prefixo" [loading]="carregandoDados">
             <ng-template pTemplate="header">
                 <tr>
                     <th>
@@ -16,6 +20,7 @@
                     <th pResizableColumn class="align-center">Prefixo</th>
                     <th pResizableColumn>Nome</th>
                     <th pResizableColumn class="align-center">Data de Extração</th>
+                    <th></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-cliente>
@@ -26,13 +31,18 @@
                     <td class="align-center">{{cliente.prefixo}}</td>
                     <td>{{cliente.nome}}</td>
                     <td class="align-center">{{cliente.datahora_extracao | date:'dd/MM/yyyy':'pt-BR'}}</td>
+                    <td class="align-center">
+                        <p-button label="Mensagens enviadas" [style]="{'background-color': 'var(--azul-escuro)', 'border-color': 'var(----azul-escuro)'}" (click)="modalMensagemEnviada(cliente)"></p-button>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
-        <p-paginator (onPageChange)="onPageChange($event)" [rows]="quantidadePagina" [totalRecords]="quantidadeRegistros"
-            [style]="{'border-radius': '0'}"></p-paginator>
+        <p-paginator *ngIf="!carregandoDados" (onPageChange)="onPageChange($event)" [first]="first" [rows]="quantidadePagina" [totalRecords]="quantidadeRegistros"
+            [style]="{'border-radius': '0'}"  [rowsPerPageOptions]="[20, 40, 60, 80, 100]"></p-paginator>
     </div>
 </div>
 
 <app-devices-empresa [mostrar]="visible" [prefixos]="prefixos"
     (fecharModal)="fecharModal($event)"></app-devices-empresa>
+
+<app-mensagens-enviadas [mostrar]="visibleMensagemEnviada" [prefixo]="prefixoMensagemEnviadas" (fecharModal)="fecharModalMensagemEnviada($event)"></app-mensagens-enviadas>

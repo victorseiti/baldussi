@@ -1,0 +1,22 @@
+<p-dialog header="Mensagens enviadas" [(visible)]="mostrar" [modal]="true" [style]="{width: '80vw'}" (onHide)="fechar()">
+    
+    <p-table [value]="mensagens" [tableStyle]="{ 'width': '100%' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Email usuário</th>
+                <th>Mensagem</th>
+                <th>Data</th>
+                <th>Usernames</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-mensagem>
+            <tr>
+                <td>{{ mensagem.user_email }}</td>
+                <td>{{ mensagem.mensagem }}</td>
+                <td>{{ mensagem.timestamp | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{ mensagem.usernames }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</p-dialog>

@@ -40,5 +40,52 @@ export class ClientesService {
     return this.http.get(`${this.url}/listar_devices_por_empresa`, {headers, params})
   }
 
-  
+  getPesquisarClientes(pesquisa:string, pagina:number, quantidade:number) {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+
+    let params = new HttpParams()
+    .set('pesquisa', pesquisa)
+    .set('pagina', pagina)
+    .set('quantidade', quantidade)
+
+    return this.http.get(`${this.url}/pesquisar_clientes`, {headers, params})
+  }
+
+  getContarClientesPesquisados(pesquisa:string) {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+
+    let params = new HttpParams()
+    .set('pesquisa', pesquisa)
+
+    return this.http.get(`${this.url}/contar_clientes_pesquisados`, {headers, params})
+  }
+
+  getListarMensagensEnviadas(prefixo:string, pagina:number, quantidade:number) {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+
+    let params = new HttpParams()
+    .set('prefixo', prefixo)
+    .set('pagina', pagina)
+    .set('quantidade', quantidade)
+
+    return this.http.get(`${this.url}/listar_mensagens_enviadas`, {headers, params})
+  }
+
+  postEnviarNotificacoesPush(prefixo:string, usernames:any, mensagem:string) {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+
+    let params = new HttpParams()
+    .set('prefixo', prefixo)
+    .set('mensagem', mensagem)
+
+    let body = {
+      usernames: usernames
+    }
+
+    return this.http.post(`${this.url}/enviar_notificacoes_push`, body, {headers, params})
+  }
 }

@@ -17,17 +17,22 @@ export class HomeComponent {
   carregandoDados=false
   visible=false
   prefixos: any = []
+  filtro: any = ''
 
   pagina=1
   quantidadePagina=20
+  first = 0
 
   ngOnInit() {
     this.getClientes();
     this.getQuantidadeClientes();
   }
 
-  getClientes() {
+  getClientes(pesquisa:boolean=false) {
     this.carregandoDados = true;
+    if (pesquisa) {
+      this.getQuantidadeClientes();
+    }
     this.api.getListarClientesCadastrados(this.pagina, this.quantidadePagina).subscribe((response: any) => {
       console.log('Response:', response);
       this.clientes = response.clientes;
@@ -46,6 +51,8 @@ export class HomeComponent {
   onPageChange(event: any) {
     console.log('Event:', event);
     this.pagina = event.page + 1;
+    this.quantidadePagina = event.rows;
+    this.first = event.first;
     this.getClientes();
   }
 
@@ -59,7 +66,48 @@ export class HomeComponent {
     }
   }
 
+  getQuantidadeClientesPesquisa() {
+    this.api.getContarClientesPesquisados(this.filtro).subscribe((response: any) => {
+      console.log('quantidade:', response);
+      this.quantidadeRegistros = response.count;
+    })
+  }
+
+  buscarClientes() {
+    console.log('filtro:', this.filtro);
+    this.carregandoDados = true;
+    this.getQuantidadeClientesPesquisa();
+    this.api.getPesquisarClientes(this.filtro, 1, 9999).subscribe((response: any) => {
+      console.log('Response:', response);
+      if (response.clientes.length > 0) {
+        this.clientes = response.clientes;
+      }
+      else {
+        this.message.add({severity:'warn', summary:'Atenção', detail:'Nenhum cliente encontrado'});
+      }
+      this.carregandoDados = false;
+    })
+  }
+
+  inputPesquisar() {
+    if (this.filtro === '') {
+      this.getClientes(true);
+    }
+  }
+
   fecharModal(event: any) {
     this.visible = event;
+  }
+
+  prefixoMensagemEnviadas: any = ''
+  visibleMensagemEnviada=false
+
+  modalMensagemEnviada(cliente:any) {
+    this.prefixoMensagemEnviadas = cliente.prefixo;
+    this.visibleMensagemEnviada = true;
+  }
+
+  fecharModalMensagemEnviada(event: any) {
+    this.visibleMensagemEnviada = event;
   }
 }

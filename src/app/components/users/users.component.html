@@ -1,0 +1,34 @@
+<div class="container-user">
+    <p-toast></p-toast>
+    <div class="adicionar-user">
+        <p-button label="Adicionar" (click)="abrirModal()"></p-button>
+    </div>
+    <div class="lista-user">
+        <p-table [value]="usuarios" [loading]="carregandoDados">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Email</th>
+                    <th>Permissão</th>
+                    <th>Departamento</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user>
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td class="align-center">{{ user.permission }}</td>
+                    <td class="align-center">{{ user.departamento }}</td>
+                    <td>
+                        <i class="pi pi-user-edit" style="color: #3B82F6;" (click)="editUser(user)"></i>
+                        &nbsp;&nbsp;
+                        <i class="pi pi-trash" style="color: red;" (click)="confirm($event)"></i>
+                        
+    <p-confirmPopup></p-confirmPopup>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<app-adicionar-usuario [mostrar]="visible" [alterar]="alterarCliente" [user]="user" (fecharModal)="fecharModal($event)"></app-adicionar-usuario>
