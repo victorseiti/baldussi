@@ -1,0 +1,27 @@
+<p-dialog header="Adicionar usuário" [(visible)]="mostrar" [modal]="true" [style]="{width: '30vw'}" (onHide)="fechar()">
+   <div class="container-add-user">
+    <div class="form-cadastro">
+        <div class="fields">
+            <label for="">Email</label>
+            <input type="text" pInputText [(ngModel)]="usuario.email" />
+        </div>
+        <div class="fields">
+            <label for="">Senha</label>
+            <input type="text" pInputText [(ngModel)]="usuario.password" />
+        </div>
+        <div class="fields">
+            <label for="">Permissão</label>
+            <input type="text" pInputText [(ngModel)]="usuario.permission" />
+        </div>
+        <div class="fields">
+            <label for="">Departamento</label>
+            <input type="text" pInputText [(ngModel)]="usuario.departamento" />
+        </div>
+    </div>
+
+    <div class="btns">
+        <p-button label="Cancelar" severity="danger" (click)="mostrar=false"></p-button>
+        <p-button label="Salvar" (click)="salvarUsuario()"></p-button>
+    </div>
+   </div>
+</p-dialog>

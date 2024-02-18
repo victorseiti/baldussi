@@ -20,4 +20,12 @@ export class AuthService {
     
     return this.http.post(this.url + '/authenticate_user', cred, {headers})
   }
+
+  logout() {
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    })
+
+    return this.http.post(this.url + '/logout', {}, {headers})
+  }
 }

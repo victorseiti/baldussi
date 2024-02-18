@@ -1,0 +1,42 @@
+<p-dialog header="Empresas" [(visible)]="mostrar" [style]="{'width': '70vw'}" [modal]="true" [draggable]="false"
+    [resizable]="false" (onHide)="fechar()">
+
+    <div class="div-empresas">
+        <p-accordion>
+            <ng-container *ngFor="let prefixo of prefixos">
+                <p-accordionTab [header]="prefixo">
+                    <p-table [value]="empresas[prefixo]" [(selection)]="empresasSelecionadas[prefixo]" dataKey="username">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 4rem">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                                <th>Username</th>
+                                <th>Data</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-device>
+                            <tr>
+                                <td>
+                                    <p-tableCheckbox [value]="device"></p-tableCheckbox>
+                                </td>
+                                <td>{{device.username}}</td>
+                                <td>{{device.timestamp}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+            </ng-container>
+        </p-accordion>
+    <div class="mensagem">
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" pInputTextarea [(ngModel)]="valueTxtArea" [autoResize]="true"></textarea>
+    </div>
+
+    <div class="btns">
+        <p-button label="Cancelar" severity="danger" (click)="fechar()"></p-button>
+        <p-button label="Enviar" (click)="enviarMensagem()"></p-button>
+    </div>
+    
+</div>
+</p-dialog>

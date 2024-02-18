@@ -1,20 +1,22 @@
+@import "primeicons/primeicons.css";
+
 :root {
     --azul-escuro: #022A5D;
     --azul-claro: #0D2180;
     --laranja: #FC9022;
 }
 
-* {
-    margin: 0;
-    padding: 0;
+html {
     box-sizing: border-box;
 }
 
 body {
+    margin: 0;
+    padding: 0;
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
     width: 100vw;
     height: 100vh;
-    background-color: rgba($color: #0D2180, $alpha: 0.2);
-    overflow-y: hidden;
+    background-color: rgba($color: #0D2180, $alpha: 0.1);
+    overflow-x: hidden;
 }

@@ -1,16 +1,23 @@
 .container-tabela-dados {
     width: 100%;
     max-width: 1200px;
+    height: auto;
     box-sizing: border-box;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
 
     th {
         padding: 1rem;
         box-sizing: border-box;
     }
 
-    // .align-center {
-    //     text-align: center;
-    // }
+    .align-center {
+        text-align: center;
+    }
 
     td {
         padding: 0.5rem 1rem;

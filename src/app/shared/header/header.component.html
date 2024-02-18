@@ -1,4 +1,4 @@
 <header class="topo" *ngIf="currentRoute !== '/login'">
-    <button>Home</button>
-    <button>Clientes</button>
+    <button routerLink="/home" [routerLinkActive]="'btn-activate'">Home</button>
+    <button routerLink="/clientes" [routerLinkActive]="'btn-activate'">Clientes</button>
 </header>
