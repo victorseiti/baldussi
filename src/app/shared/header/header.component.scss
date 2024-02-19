@@ -4,33 +4,38 @@
     height: 100px;
     background-color: var(--azul-escuro);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 1rem;
     position: relative;
+    padding: 0 2rem;
 
-    .logout {
-        position: absolute;
-        right: 2rem;
-        top: 1rem;
+    .itens-menu {
+        display: flex;
+        gap: 1rem;
+
+        >button {
+            width: 100px;
+            box-sizing: border-box;
+            padding: 0.5rem 1rem;
+            color: white;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+    
+        .btn-activate {
+            background-color: var(--laranja);
+            color: var(--azul-escuro);
+        }
     }
 
-    >button {
-        width: 100px;
-        box-sizing: border-box;
-        padding: 0.5rem 1rem;
-        color: white;
-        background-color: transparent;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        font-size: 1.1rem;
-        font-weight: bold;
-        border-radius: 6px;
+    .img-logo {
+        width: 150px;
     }
-
-    .btn-activate {
-        background-color: var(--laranja);
-        color: var(--azul-escuro);
-    }
+    
 }

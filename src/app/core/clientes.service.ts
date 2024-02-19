@@ -74,6 +74,16 @@ export class ClientesService {
     return this.http.get(`${this.url}/listar_mensagens_enviadas`, {headers, params})
   }
 
+  getContarMensagensEnviadas(prefixo:string) {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+
+    let params = new HttpParams()
+    .set('prefixo', prefixo)
+
+    return this.http.get(`${this.url}/contar_mensagens_enviadas`, {headers, params})
+  }
+
   postEnviarNotificacoesPush(prefixo:string, usernames:any, mensagem:string) {
     let headers = new HttpHeaders()
     .set('Authorization', `Bearer ${this.token}`)
@@ -82,10 +92,8 @@ export class ClientesService {
     .set('prefixo', prefixo)
     .set('mensagem', mensagem)
 
-    let body = {
-      usernames: usernames
-    }
+    
 
-    return this.http.post(`${this.url}/enviar_notificacoes_push`, body, {headers, params})
+    return this.http.post(`${this.url}/enviar_notificacoes_push`, usernames, {headers, params})
   }
 }

@@ -1,6 +1,6 @@
 <p-dialog header="Mensagens enviadas" [(visible)]="mostrar" [modal]="true" [style]="{width: '80vw'}" (onHide)="fechar()">
     
-    <p-table [value]="mensagens" [tableStyle]="{ 'width': '100%' }">
+    <p-table [value]="mensagens" [tableStyle]="{ 'width': '100%' }" [loading]="carregandoDados">
         <ng-template pTemplate="header">
             <tr>
                 <th>Email usuário</th>
@@ -19,4 +19,6 @@
         </ng-template>
     </p-table>
 
+    <p-paginator *ngIf="!carregandoDados" (onPageChange)="onPageChange($event)" [first]="first" [rows]="quantidadePagina" [totalRecords]="quantidadeRegistros"
+            [style]="{'border-radius': '0'}"  [rowsPerPageOptions]="[20, 40, 60, 80, 100]"></p-paginator>
 </p-dialog>

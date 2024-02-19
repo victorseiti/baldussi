@@ -17,9 +17,6 @@ export class LoginComponent {
   }
 
   login() {
-    console.log('Email:', this.credencials.username);
-    console.log('password:', this.credencials.password);
-
     this.auth.login(this.credencials).subscribe((response:any) => {
       console.log('Response:', response);
       if (response.access_token) {

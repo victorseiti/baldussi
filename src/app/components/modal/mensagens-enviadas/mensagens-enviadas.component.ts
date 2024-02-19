@@ -17,10 +17,14 @@ export class MensagensEnviadasComponent implements OnChanges{
   pagina=1
   quantidadePagina=20
   mensagens: any = []
+  carregandoDados=false
+  first = 0
+  quantidadeRegistros = 0
 
   ngOnChanges() {
     if (this.mostrar) {
       console.log('Prefixo:', this.prefixo);
+      this.quantidadeRegistrosMensagens();
       this.listarMensagens();
     }
   }
@@ -37,6 +41,20 @@ export class MensagensEnviadasComponent implements OnChanges{
         this.fechar();
       }
     })
+  }
+
+  quantidadeRegistrosMensagens() {
+    this.api.getContarMensagensEnviadas(this.prefixo).subscribe((response: any) => {
+      console.log('Response:', response);
+      this.quantidadeRegistros = response.count;
+    })
+  }
+
+  onPageChange(event: any) {
+    this.pagina = event.page + 1;
+    this.quantidadePagina = event.rows;
+    this.first = event.first;
+    this.listarMensagens();
   }
 
   fechar() {

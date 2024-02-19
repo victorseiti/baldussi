@@ -27,6 +27,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { MensagensEnviadasComponent } from './components/modal/mensagens-enviadas/mensagens-enviadas.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ClientesService,
     AuthenticationService,
     MessageService,
-    ConfirmationService
+    ConfirmationService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

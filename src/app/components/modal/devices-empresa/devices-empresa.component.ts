@@ -50,7 +50,6 @@ export class DevicesEmpresaComponent implements OnChanges {
     })
 
     if (this.valueTxtArea !== '' && count > 0) {
-      this.message.add({ severity: 'success', summary: 'Sucesso', detail: 'Mensagem enviada com sucesso' });
       keys.forEach((key: any) => {
         if (this.empresasSelecionadas[key].length > 0) {
           let usernames:any={}
@@ -69,6 +68,8 @@ export class DevicesEmpresaComponent implements OnChanges {
     console.log('usernames: ', usernames)
     this.api.postEnviarNotificacoesPush(prefixo, usernames, this.valueTxtArea).subscribe((res:any) => {
       console.log('res: ', res)
+      
+      this.message.add({ severity: 'success', summary: 'Sucesso', detail: `Mensagem enviada com sucesso para prefixo: ${prefixo}` });
     })
   }
 
