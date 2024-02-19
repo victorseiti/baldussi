@@ -30,7 +30,7 @@
                     </td>
                     <td class="align-center">{{cliente.prefixo}}</td>
                     <td>{{cliente.nome}}</td>
-                    <td class="align-center">{{cliente.datahora_extracao | date:'dd/MM/yyyy':'pt-BR'}}</td>
+                    <td class="align-center">{{cliente.datahora_extracao | date:'dd/MM/yyyy HH:mm':'pt-BR'}}</td>
                     <td class="align-center">
                         <p-button label="Mensagens enviadas" [style]="{'background-color': 'var(--azul-escuro)', 'border-color': 'var(----azul-escuro)'}" (click)="modalMensagemEnviada(cliente)"></p-button>
                     </td>
@@ -45,4 +45,4 @@
 <app-devices-empresa [mostrar]="visible" [prefixos]="prefixos"
     (fecharModal)="fecharModal($event)"></app-devices-empresa>
 
-<app-mensagens-enviadas [mostrar]="visibleMensagemEnviada" [prefixo]="prefixoMensagemEnviadas" (fecharModal)="fecharModalMensagemEnviada($event)"></app-mensagens-enviadas>
+<app-mensagens-enviadas [mostrar]="visibleMensagemEnviada" [prefixo]="prefixoMensagemEnviadas" [quantidadeRegistros]="quantidadeMensaensEnviadas" (fecharModal)="fecharModalMensagemEnviada($event)"></app-mensagens-enviadas>

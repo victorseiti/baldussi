@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ClientesService } from '../../../core/clientes.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-devices-empresa',
@@ -12,7 +12,7 @@ export class DevicesEmpresaComponent implements OnChanges {
   @Input() prefixos: any = [];
   @Output() fecharModal = new EventEmitter();
 
-  constructor(private api: ClientesService, private message: MessageService) { }
+  constructor(private api: ClientesService, private message: MessageService, private confirmationService: ConfirmationService) { }
 
   empresas: any = {}
   empresasSelecionadas: any = {}
@@ -70,6 +70,30 @@ export class DevicesEmpresaComponent implements OnChanges {
       console.log('res: ', res)
       
       this.message.add({ severity: 'success', summary: 'Sucesso', detail: `Mensagem enviada com sucesso para prefixo: ${prefixo}` });
+    })
+  }
+
+  confirm(e: Event, device:any) {
+    this.confirmationService.confirm({
+      target: e.target as EventTarget,
+      message: 'Deseja realmente excluir este dispositivo?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+        this.deleteDevice(device)
+      },
+      reject: () => {
+      }
+    })
+  }
+
+  deleteDevice(device:any) {
+    console.log('device: ', device)
+    this.api.deleteRemoverDevice(device.username).subscribe((res:any) => {
+      console.log('res: ', res)
+      this.message.add({ severity: 'success', summary: 'Sucesso', detail: 'Dispositivo removido com sucesso' });
+      this.devicesEmpresa();
     })
   }
 

@@ -28,6 +28,8 @@ import { MensagensEnviadasComponent } from './components/modal/mensagens-enviada
 import { LogsComponent } from './components/logs/logs.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { PasswordModule } from 'primeng/password';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -58,8 +60,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ToastModule,
     InputTextModule,
     ConfirmPopupModule,
-    DropdownModule
-
+    DropdownModule,
+    PasswordModule,
+    ConfirmDialogModule
   ],
   providers: [
     ClientesService,

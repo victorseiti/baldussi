@@ -11,7 +11,7 @@
         </div>
         <div class="fields">
             <label for="">Permissão</label>
-            <input type="text" pInputText [(ngModel)]="usuario.permission" />
+            <p-dropdown [options]="permissoes" [(ngModel)]="usuario.permission" [style]="{'width': '100%'}"></p-dropdown>
         </div>
         <div class="fields">
             <label for="">Departamento</label>
@@ -21,7 +21,8 @@
 
     <div class="btns">
         <p-button label="Cancelar" severity="danger" (click)="mostrar=false"></p-button>
-        <p-button label="Salvar" (click)="salvarUsuario()"></p-button>
+        <p-button label="Salvar" *ngIf="!alterar" (click)="salvarUsuario()"></p-button>
+        <p-button label="Alterar" *ngIf="alterar" (click)="alterarUsuario()"></p-button>
     </div>
    </div>
 </p-dialog>

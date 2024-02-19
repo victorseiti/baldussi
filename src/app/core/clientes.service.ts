@@ -92,8 +92,16 @@ export class ClientesService {
     .set('prefixo', prefixo)
     .set('mensagem', mensagem)
 
-    
-
     return this.http.post(`${this.url}/enviar_notificacoes_push`, usernames, {headers, params})
+  }
+
+  deleteRemoverDevice(username:any) {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+
+    let params = new HttpParams()
+    .set('username', username)
+
+    return this.http.delete(`${this.url}/remover_device`, {headers, params})
   }
 }

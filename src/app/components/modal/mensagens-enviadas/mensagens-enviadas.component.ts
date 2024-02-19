@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 export class MensagensEnviadasComponent implements OnChanges{
 @Input() mostrar: boolean = false;
 @Input() prefixo: any;
+@Input() quantidadeRegistros: any;
 @Output() fecharModal = new EventEmitter();
 
   constructor(private api: ClientesService, public message: MessageService) { }
@@ -19,34 +20,20 @@ export class MensagensEnviadasComponent implements OnChanges{
   mensagens: any = []
   carregandoDados=false
   first = 0
-  quantidadeRegistros = 0
 
   ngOnChanges() {
     if (this.mostrar) {
       console.log('Prefixo:', this.prefixo);
-      this.quantidadeRegistrosMensagens();
       this.listarMensagens();
     }
   }
 
   listarMensagens() {
+    this.carregandoDados = true;
     this.api.getListarMensagensEnviadas(this.prefixo, this.pagina, this.quantidadePagina).subscribe((response: any) => {
       console.log('Response:', response);
-      if (response.envios.length > 0) {
-        
         this.mensagens = response.envios;
-      }
-      else {
-        this.message.add({severity:'error', summary:'Nenhuma mensagem encontrada', detail:''});
-        this.fechar();
-      }
-    })
-  }
-
-  quantidadeRegistrosMensagens() {
-    this.api.getContarMensagensEnviadas(this.prefixo).subscribe((response: any) => {
-      console.log('Response:', response);
-      this.quantidadeRegistros = response.count;
+        this.carregandoDados = false;
     })
   }
 
@@ -58,6 +45,7 @@ export class MensagensEnviadasComponent implements OnChanges{
   }
 
   fechar() {
+    this.quantidadeRegistros = 0;
     this.prefixo = '';
     this.mensagens = [];
     this.mostrar = false;

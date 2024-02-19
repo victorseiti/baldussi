@@ -101,10 +101,19 @@ export class HomeComponent {
 
   prefixoMensagemEnviadas: any = ''
   visibleMensagemEnviada=false
+  quantidadeMensaensEnviadas=0
 
   modalMensagemEnviada(cliente:any) {
-    this.prefixoMensagemEnviadas = cliente.prefixo;
-    this.visibleMensagemEnviada = true;
+    this.api.getContarMensagensEnviadas(cliente.prefixo).subscribe((response: any) => {
+      if (response.count > 0) {
+        this.prefixoMensagemEnviadas = cliente.prefixo;
+        this.visibleMensagemEnviada = true;
+        this.quantidadeMensaensEnviadas = response.count;
+      }
+      else {
+        this.message.add({severity:'warn', summary:'Atenção', detail:'Nenhuma mensagem enviada para este cliente'});
+      }
+    })
   }
 
   fecharModalMensagemEnviada(event: any) {

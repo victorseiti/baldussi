@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="container-login">
     <div class="login">
         <img src="https://baldussi.com.br/wp-content/uploads/2022/10/baldussi-branco-1.png" alt="" class="img-logo">
@@ -9,9 +10,9 @@
                 </div>
                 <div class="field">
                     <label for="password">Senha</label>
-                    <input type="text" pInputText [(ngModel)]="credencials.password" />
+                    <p-password [(ngModel)]="credencials.password" [toggleMask]="true" [feedback]="false" [inputStyle]="{'width':'100%'}" [style]="{'width':'100%'}"></p-password>
                 </div>
-                <p-button label="Entrar" (click)="login()" [style]="{'background-color': 'var(--laranja)', 'border-color': 'var(--laranja)', 'margin-top': '2rem'}"></p-button>
+                <p-button label="Entrar" [loading]="entrando" (click)="login()" id="entrar" [style]="{'background-color': 'var(--laranja)', 'border-color': 'var(--laranja)', 'margin-top': '2rem'}"></p-button>
         </div>
        </div>
 </div>
