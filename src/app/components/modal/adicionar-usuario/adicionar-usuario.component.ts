@@ -16,7 +16,7 @@ export class AdicionarUsuarioComponent implements OnChanges {
   constructor(private api: AuthenticationService, public message: MessageService) { }
 
   usuario:any={}
-  permissoes: any = ['admin']
+  permissoes: any = ['admin', 'comum']
 
   ngOnChanges() {
     if(this.alterar) {
