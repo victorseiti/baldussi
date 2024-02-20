@@ -1,39 +1,36 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ClientesService } from '../../../core/clientes.service';
 import { MessageService } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-mensagens-enviadas',
   templateUrl: './mensagens-enviadas.component.html',
   styleUrl: './mensagens-enviadas.component.scss'
 })
-export class MensagensEnviadasComponent implements OnChanges{
-@Input() mostrar: boolean = false;
-@Input() prefixo: any;
-@Input() quantidadeRegistros: any;
-@Output() fecharModal = new EventEmitter();
+export class MensagensEnviadasComponent implements OnInit {
 
-  constructor(private api: ClientesService, public message: MessageService) { }
+  constructor(private api: ClientesService, public message: MessageService, private dialogRef: DynamicDialogRef, private dialogConfig: DynamicDialogConfig) { }
 
-  pagina=1
-  quantidadePagina=20
+  pagina = 1
+  quantidadePagina = 20
   mensagens: any = []
-  carregandoDados=false
+  carregandoDados = false
   first = 0
+  prefixo: any = this.dialogConfig.data.prefixo
+  quantidadeRegistros: any = this.dialogConfig.data.quantidadeReg
 
-  ngOnChanges() {
-    if (this.mostrar) {
-      console.log('Prefixo:', this.prefixo);
-      this.listarMensagens();
-    }
+  ngOnInit() {
+    this.listarMensagens();
+
   }
 
   listarMensagens() {
     this.carregandoDados = true;
     this.api.getListarMensagensEnviadas(this.prefixo, this.pagina, this.quantidadePagina).subscribe((response: any) => {
-      console.log('Response:', response);
-        this.mensagens = response.envios;
-        this.carregandoDados = false;
+      
+      this.mensagens = response.envios;
+      this.carregandoDados = false;
     })
   }
 
@@ -45,10 +42,6 @@ export class MensagensEnviadasComponent implements OnChanges{
   }
 
   fechar() {
-    this.quantidadeRegistros = 0;
-    this.prefixo = '';
-    this.mensagens = [];
-    this.mostrar = false;
-    this.fecharModal.emit(false);
+    this.dialogRef.close();
   }
 }

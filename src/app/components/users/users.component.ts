@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../core/authentication.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AdicionarUsuarioComponent } from '../modal/adicionar-usuario/adicionar-usuario.component';
 
 @Component({
   selector: 'app-users',
@@ -9,7 +11,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class UsersComponent implements OnInit{
   
-  constructor(private api: AuthenticationService, private confirmationService: ConfirmationService, public message: MessageService) {}
+  constructor(private api: AuthenticationService, private confirmationService: ConfirmationService, public message: MessageService, public dialog: DialogService) {}
   
   usuarios: any = []
   visible=false
@@ -29,30 +31,28 @@ export class UsersComponent implements OnInit{
     })
   }
 
-  editUser(user: any) {
-    console.log('user: ', user)
-    this.user = user
-    this.visible = true
-    this.alterarCliente = true
-  }
-
   deleteUser(user: any) {
     this.api.deleteUser(user).subscribe((res:any) => {
-      console.log('res: ', res)
       this.message.add({severity:'success', summary:'Usuário excluído com sucesso', detail:''});
       this.getUsers()
     })
   }
 
-  abrirModal() {
-    this.visible = true
-  }
+  abrirModal(editar=false, user={}) {
+    let dialog = this.dialog.open(AdicionarUsuarioComponent, {
+      modal: true,
+      header: 'Adicionar usuário',
+      width: '35%',
+      data: {
+        user: user,
+        alterar: editar
+      }
+    })
 
-  fecharModal(e:any) {
-    console.log('fecharModal: ', e)
-    this.visible = e
-    this.alterarCliente = e
-    this.getUsers()
+    dialog.onClose.subscribe((res:any) => {
+      this.getUsers()
+      
+    })
   }
 
   confirm(e: Event) {
@@ -66,7 +66,6 @@ export class UsersComponent implements OnInit{
         this.deleteUser(e)
       },
       reject: () => {
-        console.log('cancelou')
       }
     })
   }

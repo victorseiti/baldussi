@@ -1,27 +1,33 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ClientesService } from '../../../core/clientes.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-devices-empresa',
   templateUrl: './devices-empresa.component.html',
   styleUrl: './devices-empresa.component.scss'
 })
-export class DevicesEmpresaComponent implements OnChanges {
-  @Input() mostrar: boolean = false;
-  @Input() prefixos: any = [];
-  @Output() fecharModal = new EventEmitter();
+export class DevicesEmpresaComponent implements OnInit {
 
-  constructor(private api: ClientesService, private message: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private api: ClientesService, private message: MessageService, private confirmationService: ConfirmationService,
+    private dialogConfig: DynamicDialogConfig, public dialogRef: DynamicDialogRef) { }
 
   empresas: any = {}
   empresasSelecionadas: any = {}
-  valueTxtArea: any
+  valueTxtArea: any = ''
+  caracteresFaltantes: any = 300
+  prefixos: any = this.dialogConfig.data.prefixos
+  tipo: any = this.dialogConfig.data.tipo
 
-  ngOnChanges(): void {
-    if (this.mostrar) {
-      this.devicesEmpresa();
-    }
+  ngOnInit(): void {
+    this.devicesEmpresa();
+
+  }
+
+
+  limiteCaracteres() {
+    this.caracteresFaltantes = 300 - this.valueTxtArea.length;
   }
 
   devicesEmpresa() {
@@ -30,6 +36,9 @@ export class DevicesEmpresaComponent implements OnChanges {
         this.api.getListarDevicesPorEmpresa(prefixo).subscribe((response: any) => {
 
           this.empresas[prefixo] = response.devices;
+          if (response.devices.length > 0) {
+            this.empresasSelecionadas[prefixo] = response.devices;
+          }
         })
       })
     }
@@ -37,8 +46,6 @@ export class DevicesEmpresaComponent implements OnChanges {
   }
 
   enviarMensagem() {
-    console.log('Empresas selecionadas:', this.empresasSelecionadas);
-    console.log('Mensagem:', this.valueTxtArea);
 
     let keys = Object.keys(this.empresasSelecionadas);
     let count = 0;
@@ -49,31 +56,37 @@ export class DevicesEmpresaComponent implements OnChanges {
       }
     })
 
-    if (this.valueTxtArea !== '' && count > 0) {
-      keys.forEach((key: any) => {
-        if (this.empresasSelecionadas[key].length > 0) {
-          let usernames:any={}
-          usernames['usernames'] = this.empresasSelecionadas[key].map((device: any) => {return device.username})
-          this.enviarNotificacaoPush(key, usernames)
-        }
-      })
+    if (count == 0) {
+      this.message.add({ severity: 'warn', summary: 'Atenção', detail: 'Selecione ao menos uma empresa' });
+      return;
     }
-    else {
-      this.message.add({ severity: 'warn', summary: 'Atenção', detail: 'Selecione ao menos uma empresa e preencha a mensagem' });
+
+    if (this.valueTxtArea === '' || this.valueTxtArea.length > 300) {
+      this.message.add({ severity: 'warn', summary: 'Atenção', detail: 'Preencha a mensagem com no máximo 300 caracteres' });
+      return;
     }
+
+    keys.forEach((key: any) => {
+      if (this.empresasSelecionadas[key].length > 0) {
+        let usernames: any = {}
+        usernames['usernames'] = this.empresasSelecionadas[key].map((device: any) => { return device.username })
+        this.enviarNotificacaoPush(key, usernames)
+      }
+    })
+
+    this.fechar();
   }
 
-  enviarNotificacaoPush(prefixo:any, usernames:any) {
-    console.log('prefixo: ', prefixo)
-    console.log('usernames: ', usernames)
-    this.api.postEnviarNotificacoesPush(prefixo, usernames, this.valueTxtArea).subscribe((res:any) => {
-      console.log('res: ', res)
-      
+  enviarNotificacaoPush(prefixo: any, usernames: any) {
+    this.api.postEnviarNotificacoesPush(prefixo, usernames, this.valueTxtArea).subscribe((res: any) => {
+     
+
       this.message.add({ severity: 'success', summary: 'Sucesso', detail: `Mensagem enviada com sucesso para prefixo: ${prefixo}` });
+      
     })
   }
 
-  confirm(e: Event, device:any) {
+  confirm(e: Event, device: any) {
     this.confirmationService.confirm({
       target: e.target as EventTarget,
       message: 'Deseja realmente excluir este dispositivo?',
@@ -88,19 +101,27 @@ export class DevicesEmpresaComponent implements OnChanges {
     })
   }
 
-  deleteDevice(device:any) {
-    console.log('device: ', device)
-    this.api.deleteRemoverDevice(device.username).subscribe((res:any) => {
-      console.log('res: ', res)
+  deleteDevice(device: any) {
+    this.api.deleteRemoverDevice(device.username).subscribe((res: any) => {
       this.message.add({ severity: 'success', summary: 'Sucesso', detail: 'Dispositivo removido com sucesso' });
       this.devicesEmpresa();
     })
   }
 
+  enviarNotificacaoGeral() {
+    if (this.valueTxtArea === '' || this.valueTxtArea.length > 300) {
+      this.message.add({ severity: 'warn', summary: 'Atenção', detail: 'Preencha a mensagem com no máximo 300 caracteres' });
+      return;
+    }
+
+    this.api.postEnviarNotificacoesPushGlobal(this.valueTxtArea).subscribe((res: any) => {
+      
+      this.message.add({ severity: 'success', summary: 'Sucesso', detail: 'Mensagem enviada com sucesso' });
+      this.fechar();
+    })
+  }
+
   fechar() {
-    this.valueTxtArea = '';
-    this.empresasSelecionadas = {};
-    this.mostrar = false;
-    this.fecharModal.emit(false);
+    this.dialogRef.close();
   }
 }

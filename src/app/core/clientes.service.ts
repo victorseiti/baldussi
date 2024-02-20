@@ -104,4 +104,14 @@ export class ClientesService {
 
     return this.http.delete(`${this.url}/remover_device`, {headers, params})
   }
+
+  postEnviarNotificacoesPushGlobal(mensagem:string) {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+
+    let params = new HttpParams()
+    .set('mensagem', mensagem)
+
+    return this.http.post(`${this.url}/enviar_notificacoes_push_global`, {}, {headers, params})
+  }
 }

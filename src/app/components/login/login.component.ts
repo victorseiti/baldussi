@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
   login() {
     this.entrando = true;
     this.auth.login(this.credencials).subscribe((response:any) => {
-      console.log('Response:', response);
       if (response.access_token) {
 
         localStorage.setItem('token', response.access_token);

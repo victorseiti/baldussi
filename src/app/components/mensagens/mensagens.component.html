@@ -1,0 +1,25 @@
+<div style="box-sizing: border-box; padding-bottom: 2rem;">
+    <p-table [value]="logs" [tableStyle]="{ 'width': '80vw' }" [loading]="carregandoDados">
+        <ng-template pTemplate="header">
+            <tr>
+                
+                <th>Prefixo</th>
+                <th>Email</th>
+                <th>Data</th>
+                <th>Mensagem</th>
+                <th>Usuários</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-log>
+            <tr>
+                <td class="align-center">{{log.prefixo}}</td>
+                <td>{{log.user_email}}</td>
+                <td class="align-center">{{log.timestamp | date:'dd/MM/yyyy HH:mm':'pt-BR'}}</td>
+                <td>{{log.mensagem}}</td>
+                <td>{{log.usernames}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-paginator *ngIf="!carregandoDados" (onPageChange)="onPageChange($event)" [first]="first" [rows]="quantidadePagina" [totalRecords]="totalRegistros"
+                [style]="{'border-radius': '0'}"  [rowsPerPageOptions]="[20, 40, 60, 80, 100]"></p-paginator>
+</div>

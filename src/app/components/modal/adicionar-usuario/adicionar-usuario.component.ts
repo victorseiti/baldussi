@@ -1,50 +1,43 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../core/authentication.service';
 import { MessageService } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-adicionar-usuario',
   templateUrl: './adicionar-usuario.component.html',
   styleUrl: './adicionar-usuario.component.scss'
 })
-export class AdicionarUsuarioComponent implements OnChanges {
-  @Input() mostrar: boolean = false;
-  @Input() alterar: boolean = false;
-  @Input() user: any = {}
-  @Output() fecharModal = new EventEmitter();
-
-  constructor(private api: AuthenticationService, public message: MessageService) { }
+export class AdicionarUsuarioComponent implements OnInit {
+ 
+  constructor(private api: AuthenticationService, public message: MessageService, public dialogConfig: DynamicDialogConfig, public dialogRef: DynamicDialogRef) { }
 
   usuario:any={}
   permissoes: any = ['admin', 'comum']
+  alterar = this.dialogConfig.data.alterar
 
-  ngOnChanges() {
+  ngOnInit() {
     if(this.alterar) {
-      this.usuario = this.user
+      this.usuario = this.dialogConfig.data.user
     } else {
       this.usuario = {}
     }
   }
 
   fechar() {
-    this.mostrar = false;
-    this.alterar = false;
-    this.fecharModal.emit(false);
+    this.dialogRef.close()
   }
 
   salvarUsuario() {
-    console.log('user: ', this.usuario)
     this.api.postRegisterUser(this.usuario).subscribe((res:any) => {
-      console.log('res: ', res)
       this.fechar()
       this.message.add({severity:'success', summary:'Usuário cadastrado com sucesso', detail:''});
     })
   }
 
   alterarUsuario() {
-    console.log('user: ', this.usuario)
     this.api.putUpdateUser(this.usuario).subscribe((res:any) => {
-      console.log('res: ', res)
+      
       this.fechar()
       this.message.add({severity:'success', summary:'Usuário alterado com sucesso', detail:''});
     })

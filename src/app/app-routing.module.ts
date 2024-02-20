@@ -5,6 +5,7 @@ import { UsersComponent } from './components/users/users.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuardService } from './core/auth/auth-guard.service';
 import { LogsComponent } from './components/logs/logs.component';
+import { MensagensComponent } from './components/mensagens/mensagens.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,12 @@ const routes: Routes = [
     component: LogsComponent,
     pathMatch: 'full',
     canActivate: [AuthGuardService]
-  
+  },
+  {
+    path: 'mensagens-enviadas',
+    component: MensagensComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuardService]
   }
 
 ];

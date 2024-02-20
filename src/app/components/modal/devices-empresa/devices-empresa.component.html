@@ -1,10 +1,9 @@
-<p-dialog header="Enviar notificação" [(visible)]="mostrar" [style]="{'width': '70vw'}" [modal]="true" [draggable]="false"
-    [resizable]="false" (onHide)="fechar()">
-
-    <div class="div-empresas">
-        <p-accordion>
-            <ng-container *ngFor="let prefixo of prefixos">
-                <p-accordionTab [header]="prefixo">
+<div class="div-empresas">
+    <p-accordion *ngIf="tipo == 'selecao'">
+        <ng-container *ngFor="let prefixo of prefixos">
+            <p-accordionTab [header]="prefixo">
+                <span *ngIf="empresas[prefixo] && empresas[prefixo].length == 0">Nenhum usuário foi encontrado</span>
+                <ng-container *ngIf="empresas[prefixo] && empresas[prefixo].length > 0">
                     <p-table [value]="empresas[prefixo]" [(selection)]="empresasSelecionadas[prefixo]" dataKey="username">
                         <ng-template pTemplate="header">
                             <tr>
@@ -24,24 +23,28 @@
                                 <td>{{device.username}}</td>
                                 <td>{{device.timestamp | date:'dd/MM/yyyy HH:mm'}}</td>
                                 <td>
-                                    <i class="pi pi-trash" style="color: red; cursor: pointer;" (click)="confirm($event, device)"></i>
+                                    <i class="pi pi-trash" style="color: red; cursor: pointer;"
+                                        (click)="confirm($event, device)"></i>
                                     <p-confirmPopup></p-confirmPopup>
                                 </td>
                             </tr>
                         </ng-template>
                     </p-table>
-                </p-accordionTab>
-            </ng-container>
-        </p-accordion>
+                </ng-container>
+            </p-accordionTab>
+        </ng-container>
+    </p-accordion>
     <div class="mensagem">
         <label for="mensagem">Mensagem</label>
-        <textarea id="mensagem" pInputTextarea [(ngModel)]="valueTxtArea" [autoResize]="true"></textarea>
+        <textarea id="mensagem" pInputTextarea [(ngModel)]="valueTxtArea" (input)="limiteCaracteres()"
+            [autoResize]="true" [maxlength]="300" style="overflow-y: auto;"></textarea>
+        <span>{{caracteresFaltantes}}</span>
     </div>
 
     <div class="btns">
         <p-button label="Cancelar" severity="danger" (click)="fechar()"></p-button>
-        <p-button label="Enviar" (click)="enviarMensagem()"></p-button>
+        <p-button label="Enviar" *ngIf="tipo == 'selecao'" (click)="enviarMensagem()"></p-button>
+        <p-button label="Enviar" *ngIf="tipo == 'geral'" (click)="enviarNotificacaoGeral()"></p-button>
     </div>
-    
+
 </div>
-</p-dialog>

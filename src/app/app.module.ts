@@ -30,6 +30,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { PasswordModule } from 'primeng/password';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { MensagensComponent } from './components/mensagens/mensagens.component';
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DevicesEmpresaComponent,
     AdicionarUsuarioComponent,
     MensagensEnviadasComponent,
-    LogsComponent
+    LogsComponent,
+    MensagensComponent
   ],
   imports: [
     BrowserModule,
@@ -62,13 +65,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ConfirmPopupModule,
     DropdownModule,
     PasswordModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DynamicDialogModule
   ],
   providers: [
     ClientesService,
     AuthenticationService,
     MessageService,
     ConfirmationService,
+    DialogService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]

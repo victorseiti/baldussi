@@ -1,5 +1,4 @@
-<p-dialog header="Adicionar usuário" [(visible)]="mostrar" [modal]="true" [style]="{width: '30vw'}" (onHide)="fechar()">
-   <div class="container-add-user">
+<div class="container-add-user">
     <div class="form-cadastro">
         <div class="fields">
             <label for="">Email</label>
@@ -11,7 +10,8 @@
         </div>
         <div class="fields">
             <label for="">Permissão</label>
-            <p-dropdown [options]="permissoes" [(ngModel)]="usuario.permission" [style]="{'width': '100%'}"></p-dropdown>
+            <p-dropdown [options]="permissoes" [(ngModel)]="usuario.permission"
+                [style]="{'width': '100%'}"></p-dropdown>
         </div>
         <div class="fields">
             <label for="">Departamento</label>
@@ -20,9 +20,8 @@
     </div>
 
     <div class="btns">
-        <p-button label="Cancelar" severity="danger" (click)="mostrar=false"></p-button>
+        <p-button label="Cancelar" severity="danger" (click)="fechar()"></p-button>
         <p-button label="Salvar" *ngIf="!alterar" (click)="salvarUsuario()"></p-button>
         <p-button label="Alterar" *ngIf="alterar" (click)="alterarUsuario()"></p-button>
     </div>
-   </div>
-</p-dialog>
+</div>

@@ -19,7 +19,7 @@
                     <td class="align-center">{{ user.permission }}</td>
                     <td class="align-center">{{ user.departamento }}</td>
                     <td>
-                        <i class="pi pi-user-edit" style="color: #3B82F6;" (click)="editUser(user)"></i>
+                        <i class="pi pi-user-edit" style="color: #3B82F6;" (click)="abrirModal(true,user)"></i>
                         &nbsp;&nbsp;
                         <i class="pi pi-trash" style="color: red;" (click)="confirm($event)"></i>
                         
@@ -30,5 +30,3 @@
         </p-table>
     </div>
 </div>
-
-<app-adicionar-usuario [mostrar]="visible" [alterar]="alterarCliente" [user]="user" (fecharModal)="fecharModal($event)"></app-adicionar-usuario>
