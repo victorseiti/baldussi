@@ -14,6 +14,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
           // Redirecionar para a tela de login
+          localStorage.removeItem('token');
           this.router.navigate(['/login']);
         }
         return throwError(error);
