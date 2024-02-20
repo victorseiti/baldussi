@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   credencials = {
     username: '',
     password: ''
-  
+
   }
 
   entrando = false;
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
         let input = document.getElementById('entrar') as HTMLElement;
         input.click();
       }
-    
+
     })
   }
 
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.entrando = true;
     this.auth.login(this.credencials).subscribe((response:any) => {
       if (response.access_token) {
-
+        localStorage.removeItem('token')
         localStorage.setItem('token', response.access_token);
         this.entrando = false;
         this.router.navigate(['/home']);

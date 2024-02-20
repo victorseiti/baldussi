@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientesService } from './core/clientes.service';
 import { TableModule } from 'primeng/table';
 import { LoginComponent } from './components/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -27,11 +27,13 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { MensagensEnviadasComponent } from './components/modal/mensagens-enviadas/mensagens-enviadas.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { DropdownModule } from 'primeng/dropdown';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { PasswordModule } from 'primeng/password';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MensagensComponent } from './components/mensagens/mensagens.component';
+import { UnauthorizedInterceptor } from './core/interceptor/unauthorized.interceptor';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -66,15 +68,18 @@ import { MensagensComponent } from './components/mensagens/mensagens.component';
     DropdownModule,
     PasswordModule,
     ConfirmDialogModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    CalendarModule
   ],
   providers: [
     ClientesService,
+    DatePipe,
     AuthenticationService,
     MessageService,
     ConfirmationService,
     DialogService,
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

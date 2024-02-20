@@ -1,8 +1,16 @@
-<div style="box-sizing: border-box; padding-bottom: 2rem;">
-    <p-table [value]="logs" [tableStyle]="{ 'width': '80vw' }" [loading]="carregandoDados">
+<div class="container-mensagens-enviadas">
+    <div class="filtros">
+      <div class="quantidadeMensagens">
+        <span>Quantidade de Mensagens: {{totalRegistros}}</span>
+      </div>
+      <p-dropdown [options]="prefixos" [(ngModel)]="prefixoSelecionado" [filter]="true" (ngModelChange)="filtroPrefixo()" placeholder="Selecione a empresa" [virtualScroll]="true" [virtualScrollItemSize]="50" [style]="{'width': '300px'}" [showClear]="true" (onClear)="limpaFiltroPrefixo()"></p-dropdown>
+      <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" placeholder="Selecione a data" dateFormat="dd/mm/yy" (ngModelChange)="filtroData()" (onClear)="limparDatas()" [showClear]="true"></p-calendar>
+    </div>
+    <div>
+      <p-table [value]="logs" [tableStyle]="{ 'width': '80vw' }" [loading]="carregandoDados">
         <ng-template pTemplate="header">
             <tr>
-                
+
                 <th>Prefixo</th>
                 <th>Email</th>
                 <th>Data</th>
@@ -22,4 +30,5 @@
     </p-table>
     <p-paginator *ngIf="!carregandoDados" (onPageChange)="onPageChange($event)" [first]="first" [rows]="quantidadePagina" [totalRecords]="totalRegistros"
                 [style]="{'border-radius': '0'}"  [rowsPerPageOptions]="[20, 40, 60, 80, 100]"></p-paginator>
+    </div>
 </div>

@@ -10,9 +10,9 @@ import { AdicionarUsuarioComponent } from '../modal/adicionar-usuario/adicionar-
   styleUrl: './users.component.scss'
 })
 export class UsersComponent implements OnInit{
-  
+
   constructor(private api: AuthenticationService, private confirmationService: ConfirmationService, public message: MessageService, public dialog: DialogService) {}
-  
+
   usuarios: any = []
   visible=false
   alterarCliente=false
@@ -32,7 +32,7 @@ export class UsersComponent implements OnInit{
   }
 
   deleteUser(user: any) {
-    this.api.deleteUser(user).subscribe((res:any) => {
+    this.api.deleteUser(user.email).subscribe((res:any) => {
       this.message.add({severity:'success', summary:'Usuário excluído com sucesso', detail:''});
       this.getUsers()
     })
@@ -51,11 +51,11 @@ export class UsersComponent implements OnInit{
 
     dialog.onClose.subscribe((res:any) => {
       this.getUsers()
-      
+
     })
   }
 
-  confirm(e: Event) {
+  confirm(e: Event, user:any) {
     this.confirmationService.confirm({
       target: e.target as EventTarget,
       message: 'Deseja realmente excluir este usuário?',
@@ -63,7 +63,7 @@ export class UsersComponent implements OnInit{
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
-        this.deleteUser(e)
+        this.deleteUser(user)
       },
       reject: () => {
       }
