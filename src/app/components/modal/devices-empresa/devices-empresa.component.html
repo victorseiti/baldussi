@@ -43,8 +43,8 @@
 
     <div class="btns">
         <p-button label="Cancelar" severity="danger" (click)="fechar()"></p-button>
-        <p-button label="Enviar" *ngIf="tipo == 'selecao'" (click)="enviarMensagem()"></p-button>
-        <p-button label="Enviar" *ngIf="tipo == 'geral'" (click)="enviarNotificacaoGeral()"></p-button>
+        <p-button label="Enviar" *ngIf="tipo == 'selecao'" [loading]="enviando" (click)="enviarMensagem()"></p-button>
+        <p-button label="Enviar" *ngIf="tipo == 'geral'" [loading]="enviando" (click)="enviarNotificacaoGeral()"></p-button>
     </div>
 
 </div>

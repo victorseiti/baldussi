@@ -75,7 +75,7 @@ export class HomeComponent {
           width: '70vw',
           data: {
             prefixos: this.clientesSelecionados.map((cliente: any) => cliente.prefixo),
-            tipo: 'selecao'
+            tipo: tipo
           }
         })
       }
@@ -91,7 +91,7 @@ export class HomeComponent {
         resizable: false,
         width: '70vw',
         data: {
-          prefixos: this.clientes.map((cliente: any) => cliente.prefixo),
+          prefixos: [],
           tipo: tipo
         }
       })

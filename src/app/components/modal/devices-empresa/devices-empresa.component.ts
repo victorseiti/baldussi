@@ -19,6 +19,7 @@ export class DevicesEmpresaComponent implements OnInit {
   caracteresFaltantes: any = 300
   prefixos: any = this.dialogConfig.data.prefixos
   tipo: any = this.dialogConfig.data.tipo
+  enviando=false;
 
   ngOnInit(): void {
     this.devicesEmpresa();
@@ -66,6 +67,8 @@ export class DevicesEmpresaComponent implements OnInit {
       return;
     }
 
+    this.enviando=true;
+
     keys.forEach((key: any) => {
       if (this.empresasSelecionadas[key].length > 0) {
         let usernames: any = {}
@@ -74,6 +77,7 @@ export class DevicesEmpresaComponent implements OnInit {
       }
     })
 
+    this.enviando=false;
     this.fechar();
   }
 
@@ -114,9 +118,12 @@ export class DevicesEmpresaComponent implements OnInit {
       return;
     }
 
+    this.enviando = true;
+
     this.api.postEnviarNotificacoesPushGlobal(this.valueTxtArea).subscribe((res: any) => {
       
       this.message.add({ severity: 'success', summary: 'Sucesso', detail: 'Mensagem enviada com sucesso' });
+      this.enviando = false;
       this.fechar();
     })
   }
