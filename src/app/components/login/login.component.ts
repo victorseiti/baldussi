@@ -35,8 +35,11 @@ export class LoginComponent implements OnInit {
       if (response.access_token) {
         localStorage.removeItem('token')
         localStorage.setItem('token', response.access_token);
-        this.entrando = false;
+        setTimeout(() => {
+          this.entrando = false;
         this.router.navigate(['/home']);
+        },2000)
+        
       }
     }, (error) => {
       this.message.add( {severity:'error', summary:'Erro', detail:'Usuário ou senha inválidos'})

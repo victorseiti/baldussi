@@ -87,6 +87,8 @@ export class DevicesEmpresaComponent implements OnInit {
 
       this.message.add({ severity: 'success', summary: 'Sucesso', detail: `Mensagem enviada com sucesso para prefixo: ${prefixo}` });
       
+    }, (error) => {
+      this.message.add({ severity: 'error', summary: 'Erro', detail: error.error.message });
     })
   }
 
@@ -109,6 +111,9 @@ export class DevicesEmpresaComponent implements OnInit {
     this.api.deleteRemoverDevice(device.username).subscribe((res: any) => {
       this.message.add({ severity: 'success', summary: 'Sucesso', detail: 'Dispositivo removido com sucesso' });
       this.devicesEmpresa();
+    }, (error) => {
+
+      this.message.add({ severity: 'error', summary: 'Erro', detail: error.error.message });
     })
   }
 
@@ -125,6 +130,10 @@ export class DevicesEmpresaComponent implements OnInit {
       this.message.add({ severity: 'success', summary: 'Sucesso', detail: 'Mensagem enviada com sucesso' });
       this.enviando = false;
       this.fechar();
+    }, (error) => {
+
+      this.enviando = false;
+      this.message.add({ severity: 'error', summary: 'Erro', detail: error.error.message });
     })
   }
 
